@@ -9,6 +9,10 @@ const POST_MASTER = require("../model/postMasterSchema");
 const POST_ACTION = require("../model/postActionSchema");
 const VENDOR_MEDIA = require("../model/vendorMediaSchema");
 
+router.get("/", (req, res) => {
+  res.send("hello from backend");
+});
+
 router.post("/setvendor", async (req, res) => {
   const {
     vendor_id,
