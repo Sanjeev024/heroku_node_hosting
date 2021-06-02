@@ -1,11 +1,11 @@
 {
-  "name": "fin-ops-nodejs",
+  "name": "fotoley-test-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "keywords": [
     "example",
@@ -16,9 +16,9 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^9.0.2",
-    "express-session": "^1.17.1",
+    "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.9",
+    "mongoose": "^5.12.12",
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
