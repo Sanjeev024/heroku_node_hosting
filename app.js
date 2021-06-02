@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 app.use(cors());
+dotenv.config({ path: "./config.env" });
 var session = require("express-session");
 app.use(
   session({
@@ -14,13 +15,13 @@ app.use(
   })
 );
 
-dotenv.config({ path: "./config.env" });
-const port = process.env.PORT;
+const host = "0.0.0.0";
+const port = process.env.PORT || 3000;
 require("./db/conn");
 const USER = require("./model/userSchema");
 app.use(express.json());
 app.use(require("./routes/vendorAPI"));
 
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`Server app listening at http://localhost:${port}`);
 });
