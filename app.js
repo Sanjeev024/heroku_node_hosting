@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 app.use(cors());
-dotenv.config({ path: "./config.env" });
+
 var session = require("express-session");
 app.use(
   session({
@@ -16,7 +16,7 @@ app.use(
 );
 
 const host = "0.0.0.0";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 300;
 require("./db/conn");
 const USER = require("./model/userSchema");
 app.use(express.json());
