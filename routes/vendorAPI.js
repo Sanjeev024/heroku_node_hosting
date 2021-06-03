@@ -8,6 +8,7 @@ const VENDOR_REVIEWS = require("../model/vendorReviewsSchema");
 const POST_MASTER = require("../model/postMasterSchema");
 const POST_ACTION = require("../model/postActionSchema");
 const VENDOR_MEDIA = require("../model/vendorMediaSchema");
+const ARTIST = require("../model/artistMasterSchema");
 
 router.get("/", (req, res) => {
   res.send("hello from backend");
@@ -44,6 +45,37 @@ router.post("/setvendor", async (req, res) => {
   }
 });
 
+router.post("/setartists", async (req, res) => {
+  const {
+    artist_id,
+    artist_bio,
+    artist_type,
+    plural_form,
+    description,
+    has_video,
+    has_extrafields,
+    is_active,
+  } = req.body;
+
+  try {
+    const artist_master = new ARTIST({
+      artist_id,
+      artist_bio,
+      artist_type,
+      plural_form,
+      description,
+      has_video,
+      has_extrafields,
+      is_active,
+    });
+
+    await artist_master.save();
+    res.status(201).json({ message: "Sucess!" });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/getvendor", async (req, res) => {
   const { vendor_id } = req.body;
   const vendorData = await VENDOR.find();
@@ -53,6 +85,32 @@ router.get("/getvendor", async (req, res) => {
   }
 });
 
+router.get("/getartistdetails", async (req, res) => {
+  const id = req.query.id;
+  const artist_master = await ARTIST.findOne({ id: id });
+  console.log(artist_master);
+
+  if (artist_master) {
+    return res.status(200).json({ artist_type: artist_master.artist_type });
+  }
+});
+router.get("/getartistId", async (req, res) => {
+  const id = req.query.id;
+  const artist_id = await VENDOR.findOne({ vendor_id: id });
+
+  if (artist_id) {
+    return res.status(200).json({ artist_type: artist_id.artist_type });
+  }
+});
+
+router.get("/getartistcity", async (req, res) => {
+  const id = req.query.city_id;
+  const artist_city = await CITY.findOne({ city_id: id });
+
+  if (artist_city) {
+    return res.status(200).json({ artist_city: artist_city.city_name });
+  }
+});
 router.get("/getvendordetails", async (req, res) => {
   const vendor_id = req.query.vendor_id;
   const vendorData = await VENDOR.findOne({ vendor_id: vendor_id });
@@ -274,7 +332,10 @@ router.get("/getcitydetails", async (req, res) => {
 
 router.get("/getreviewsdetails", async (req, res) => {
   const vendor_id = req.query.vendor_id;
-  const reviewData = await VENDOR_REVIEWS.findOne({ vendor_id: vendor_id });
+  const is_approved = 1;
+  const reviewData = await VENDOR_REVIEWS.find({
+    $and: [{ vendor_id: vendor_id }, { is_approved: is_approved }],
+  });
   // console.log(vendorData);
 
   if (reviewData) {

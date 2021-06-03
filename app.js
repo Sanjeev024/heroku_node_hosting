@@ -1,5 +1,4 @@
-const host = "0.0.0.0";
-const port = process.env.PORT || 300;
+const port = process.env.PORT || 3001;
 const express = require("express");
 
 const cors = require("cors");
