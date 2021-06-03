@@ -88,7 +88,6 @@ router.get("/getvendor", async (req, res) => {
 router.get("/getartistdetails", async (req, res) => {
   const id = req.query.id;
   const artist_master = await ARTIST.findOne({ id: id });
-  console.log(artist_master);
 
   if (artist_master) {
     return res.status(200).json({ artist_type: artist_master.artist_type });
